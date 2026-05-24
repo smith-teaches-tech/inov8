@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>inov8 — a wood block's worth of links</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --paper: #f4ede1;
+    --paper-deep: #e8dcc4;
+    --accent: #c8442a;
+    --accent-deep: #8a2e1c;
+    --muted: #6b5d4a;
+    --rule: #2d2620;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    line-height: 1.5;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(200,68,42,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(45,38,32,0.05) 0%, transparent 50%);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='3' /><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    z-index: 100;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+    position: relative;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: end;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 1.5rem;
+  }
+
+  .masthead-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  h1.masthead {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+
+  h1.masthead em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  .stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    border: 2px solid var(--accent-deep);
+    padding: 0.6rem 0.9rem;
+    text-align: center;
+    transform: rotate(-3deg);
+    white-space: nowrap;
+    background: var(--paper);
+  }
+
+  .stamp strong { display: block; font-size: 0.85rem; margin: 0.2rem 0; }
+
+  .deck {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 1.5rem 0 0;
+    line-height: 1.4;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; }
+    header { grid-template-columns: 1fr; align-items: start; }
+    .stamp { justify-self: start; }
+  }
+
+  .qr-frame {
+    background: white;
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 0 var(--paper-deep), 0 4px 0 var(--paper-deep), 0 4px 20px rgba(0,0,0,0.1);
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .qr-frame::before {
+    content: 'SCAN ↓';
+    position: absolute;
+    top: -1.5rem; left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+  }
+
+  .qr-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem; right: -0.5rem;
+    width: 100%; height: 100%;
+    border: 1px solid var(--accent);
+    z-index: -1;
+  }
+
+  #qrcode { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  #qrcode svg { width: 100%; height: 100%; }
+
+  .hero-text h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-text h2 strong { font-weight: 900; font-style: italic; color: var(--accent); }
+  .hero-text p { font-size: 1rem; color: var(--muted); margin-bottom: 0.8rem; max-width: 44ch; }
+
+  .award-note {
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent);
+    padding: 1.2rem 1.4rem;
+    margin: 1.8rem 0 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .award-note strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .footnote {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--muted);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin: 4rem 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before { content: '§'; font-family: 'Fraunces', serif; font-size: 1.2rem; font-style: italic; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+  .apps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+
+  .app {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 1.8rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    position: relative;
+    transition: background 0.3s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .app.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, var(--paper-deep) 0%, var(--paper) 100%);
+  }
+
+  @media (max-width: 600px) {
+    .app.featured { grid-column: span 1; }
+  }
+
+  .app:hover { background: var(--paper-deep); }
+  .app:hover .app-arrow { transform: translate(4px, -4px); }
+
+  .app-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  .app-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .app.featured .app-name { font-size: 1.8rem; }
+
+  .app-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-top: -0.2rem;
+  }
+
+  .app-desc {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--ink);
+    flex: 1;
+    margin-top: 0.4rem;
+  }
+
+  .app-desc em {
+    font-style: italic;
+    color: var(--muted);
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .app-arrow {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+
+  .revenue-ticker {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent-deep);
+    background: rgba(200,68,42,0.08);
+    border: 1px dashed var(--accent);
+    padding: 0.2rem 0.5rem;
+    margin-top: 0.6rem;
+    align-self: flex-start;
+  }
+
+  .fine-print {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--rule);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 760px) {
+    .fine-print { grid-template-columns: 1fr; }
+  }
+
+  .fine-print p { margin-bottom: 0.8rem; }
+  .fine-print .colophon-title {
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+
+  .errata { font-style: italic; font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--muted); }
+
+  .app, .qr-frame, .hero-text > * {
+    opacity: 0;
+    animation: rise 0.7s ease forwards;
+  }
+  .qr-frame { animation-delay: 0.1s; }
+  .hero-text > *:nth-child(1) { animation-delay: 0.2s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.3s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.4s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.5s; }
+  .hero-text > *:nth-child(5) { animation-delay: 0.6s; }
+  .app:nth-child(1) { animation-delay: 0.7s; }
+  .app:nth-child(2) { animation-delay: 0.8s; }
+  .app:nth-child(3) { animation-delay: 0.9s; }
+  .app:nth-child(4) { animation-delay: 1.0s; }
+  .app:nth-child(5) { animation-delay: 1.1s; }
+  .app:nth-child(6) { animation-delay: 1.2s; }
+  .app:nth-child(7) { animation-delay: 1.3s; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="masthead-meta">
+        <span>Vol. I · No. 1</span>
+        <span>Dhahran · est. 2026</span>
+      </div>
+      <h1 class="masthead">inov<em>8</em></h1>
+      <p class="deck">A small repository of mostly-working software and adjacent thinking, commemorated unnecessarily in lacquered wood. Curated by one M. Smith, who really should be grading.</p>
+    </div>
+    <div class="stamp">
+      Awarded<strong>★ INNOVATION ★</strong>by people who probably haven't read the code
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="qr-frame">
+      <div id="qrcode"></div>
+    </div>
+    <div class="hero-text">
+      <h2>You scanned a <strong>block of wood</strong>. That's a lot of effort for what is, candidly, just a list of links.</h2>
+      <p>Still — since you're here — below you'll find the work that apparently merited recognition. Most of it runs. A few even solve real problems.</p>
+      <p>No subscription. No newsletter. No dark patterns. (No light ones either. There are barely any patterns.)</p>
+      <div class="award-note">
+        <strong>★ A note on the trophy</strong>
+        Strictly speaking, the award was for knowing a fair bit about AI and for an "innovative" grading approach — not for the apps below. The apps are just what happens when you can't stop tinkering between Period 3 and Period 5.
+      </div>
+      <div class="footnote">Thank you for not just nodding politely and walking away.</div>
+    </div>
+  </section>
+
+  <div class="section-label">The Exhibits</div>
+
+  <div class="apps">
+
+    <a class="app featured" href="https://write.papertrailacademic.com/" target="_blank">
+      <span class="app-num">№ 01 · the one I'm trying to make money with</span>
+      <div>
+        <div class="app-name">PaperTrail Write</div>
+        <div class="app-tag">Monitored Writing · SaaS</div>
+      </div>
+      <p class="app-desc">A browser-based, monitored writing surface. Tracks time-on-task, paste events, tab-switching, and whether pasted text gets quietly deleted afterwards. Does <strong>not</strong> log keystrokes, clipboard contents, or anything off-page. The teacher gets a session report; the student gets a clean place to write. <em>Lifetime revenue to date: $4.99. We are, technically, profitable on a per-bagel basis.</em></p>
+      <span class="revenue-ticker">REV: $4.99 · YTD</span>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a class="app" href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank">
+      <span class="app-num">№ 02</span>
+      <div>
+        <div class="app-name">PaperTrail (Extension)</div>
+        <div class="app-tag">Chrome Extension</div>
+      </div>
+      <p class="app-desc">The Chrome companion. Captures writing as it happens inside Google Docs, so authorship is something you can show — not something you have to swear to. <em>Turnitin tells you if it was copied. This tells you if it was theirs.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/" target="_blank">
+      <span class="app-num">№ 03</span>
+      <div>
+        <div class="app-name">Classroom Games</div>
+        <div class="app-tag">Hub · AP Lang · TOK · EE · Research</div>
+      </div>
+      <p class="app-desc">The main hangar. Hexagonal Thinking, Evidence Hunt, the IB Dashboard, TOK lessons (maps, paradigm shifts, power and knowledge), thesis crafting, the EE formatting game, IELTS practice — about two dozen tools in one place. <em>If only one link works on this page, make it this one.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a class="app" href="https://smith-teaches-tech.github.io/asd-english/" target="_blank" data-placeholder>
+      <span class="app-num">№ 04</span>
+      <div>
+        <div class="app-name">ASD English Dept.</div>
+        <div class="app-tag">Department Hub</div>
+      </div>
+      <p class="app-desc">The official-ish homepage of the English department. Curricula, resources, links the team actually uses. <em>Built because the alternative was another shared Google folder.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a class="app" href="https://smith-teaches-tech.github.io/library/" target="_blank" data-placeholder>
+      <span class="app-num">№ 05</span>
+      <div>
+        <div class="app-name">Dept. Library</div>
+        <div class="app-tag">Books · By Classroom</div>
+      </div>
+      <p class="app-desc">A directory of which books live in which classrooms. Not a checkout system — just a map. If you need <em>Gatsby</em>, it tells you whose room to walk to. <em>Apps Script: the duct tape of education.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a class="app" href="#" target="_blank" data-placeholder>
+      <span class="app-num">№ 06</span>
+      <div>
+        <div class="app-name">AI Integrity Report</div>
+        <div class="app-tag">Research · Turnitin Study</div>
+      </div>
+      <p class="app-desc">An analysis of Turnitin AI-detection data from amnesty programs in AP Lang and IB Extended Essays, including a 44-document validation study. Available in administrator and parent-facing flavours. <em>The "innovative grading approach" that the wood block is, in part, blaming.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a class="app" href="#" target="_blank" data-placeholder>
+      <span class="app-num">№ 07</span>
+      <div>
+        <div class="app-name">Agent Smith</div>
+        <div class="app-tag">Personal Investing Project</div>
+      </div>
+      <p class="app-desc">A long-running personal investment project, anchored in passive index philosophy and named after the only Smith allowed to be in two places at once. <em>Not an app you can use. Not financial advice. Definitely not bullet-time.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+  </div>
+
+  <div class="fine-print">
+    <div>
+      <div class="colophon-title">Colophon</div>
+      <p>Set in Fraunces (display) and JetBrains Mono (technical apparatus). Built in a single HTML file, hosted on GitHub Pages, because it turns out you don't need much.</p>
+      <p>All work © M. Smith, who reserves the right to break any of it at any time, usually right before a class needs it.</p>
+      <p class="errata">Errata: the trophy is, in fact, a block of wood. This was not a mistake.</p>
+    </div>
+    <div>
+      <div class="colophon-title">Contact</div>
+      <p>American School of Dhahran<br>Eastern Province, KSA</p>
+      <p>smith-teaches-tech<br>on GitHub</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+  // QR code points to the classroom-games hub (the real destination)
+  const QR_URL = 'https://smith-teaches-tech.github.io/classroom-games/';
+
+  QRCode.toString(QR_URL, {
+    type: 'svg',
+    margin: 0,
+    errorCorrectionLevel: 'M',
+    color: { dark: '#1a1714', light: '#ffffff00' }
+  }, function (err, svg) {
+    if (err) {
+      document.getElementById('qrcode').textContent = 'QR generation failed.';
+      return;
+    }
+    document.getElementById('qrcode').innerHTML = svg;
+  });
+</script>
+
+</body>
+</html>
