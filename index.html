@@ -293,6 +293,7 @@
     color: inherit;
     background: rgba(255,253,247,0.4);
     box-shadow: 3px 3px 0 var(--paper-deep);
+    cursor: pointer;
   }
 
   /* alternate the slight tilt for each card */
@@ -537,7 +538,7 @@
 
   <div class="apps">
 
-    <a class="app" href="https://smith-teaches-tech.github.io/asd-english-department/" target="_blank">
+    <div class="app" data-href="https://smith-teaches-tech.github.io/asd-english-department/" role="link" tabindex="0">
       <span class="app-num">№ 01</span>
       <div>
         <div class="app-name">ASD English Dept.</div>
@@ -545,9 +546,9 @@
       </div>
       <p class="app-desc">The operating system of the English department: tools, handbook, curriculum maps for every course (9–12, AP Lang, AP Lit, Speech, Mythology, Film, Creative Writing), sub plans, master schedule, duty roster. <em>Built because the alternative was another shared Google folder.</em></p>
       <span class="app-arrow">↗</span>
-    </a>
+    </div>
 
-    <a class="app" href="https://smith-teaches-tech.github.io/asd-english-department/library/" target="_blank">
+    <div class="app" data-href="https://smith-teaches-tech.github.io/asd-english-department/library/" role="link" tabindex="0">
       <span class="app-num">№ 02</span>
       <div>
         <div class="app-name">Dept. Library</div>
@@ -555,7 +556,7 @@
       </div>
       <p class="app-desc">A directory of which books live in which classrooms. Not a checkout system — just a map. If you need <em>Gatsby</em>, it tells you whose room to walk to.</p>
       <span class="app-arrow">↗</span>
-    </a>
+    </div>
 
   </div>
 
@@ -569,7 +570,7 @@
 
   <div class="apps">
 
-    <a class="app featured" href="https://papertrailacademic.com/" target="_blank">
+    <div class="app featured" data-href="https://papertrailacademic.com/" role="link" tabindex="0">
       <span class="app-num">№ 03 · the actual flagship</span>
       <div>
         <div class="app-name">PaperTrail</div>
@@ -615,7 +616,7 @@
       <span class="revenue-ticker">45 USERS · $4.99 LIFETIME REV</span>
       <span class="scribble-note">a per-bagel profit margin!</span>
       <span class="app-arrow">↗</span>
-    </a>
+    </div>
 
   </div>
 
@@ -629,7 +630,7 @@
 
   <div class="apps">
 
-    <a class="app featured" href="https://smith-teaches-tech.github.io/classroom-games/" target="_blank">
+    <div class="app featured" data-href="https://smith-teaches-tech.github.io/classroom-games/" role="link" tabindex="0">
       <span class="app-num">№ 04 · the whole arcade</span>
       <div>
         <div class="app-name">Classroom Games</div>
@@ -637,7 +638,7 @@
       </div>
       <p class="app-desc">Roughly two dozen single-purpose tools for the courses I teach. <strong>AP Lang:</strong> Hexagonal Thinking, Commentary Workshop, Evidence Hunt, Thesis Statements, Rhetorical Analysis Sprint, an Unpopular Opinion Generator that exists mostly to teach semicolons. <strong>TOK:</strong> The Map is Not the Territory, Paradigm Shifts, Power &amp; Knowledge, Earthrise (Apollo 8 as a TOK object). <strong>IB Core:</strong> a Dashboard for the three things students forget about until April. <strong>AP Research:</strong> a literature-review organiser. <em>The whole thing is held together by a Google Sheets backend — the duct tape and bubble gum of modern coding.</em></p>
       <span class="app-arrow">↗</span>
-    </a>
+    </div>
 
   </div>
 
@@ -651,7 +652,7 @@
 
   <div class="apps">
 
-    <a class="app" href="https://smith-teaches-tech.github.io/educational-research-data/" target="_blank">
+    <div class="app" data-href="https://smith-teaches-tech.github.io/educational-research-data/" role="link" tabindex="0">
       <span class="app-num">№ 05</span>
       <div>
         <div class="app-name">Classroom Research</div>
@@ -659,7 +660,7 @@
       </div>
       <p class="app-desc">A small archive of data studies from real classrooms. Headline reports: 91 papers across AP Lang and IB amnesty programs (77% confession rate, &lt;1% false positives, +63% flagging Sep&nbsp;2025–Jan&nbsp;2026); an internal Turnitin validation against 44 documents of known authorship; and a plain-language parent summary. <em>Includes a supervised writing protocol for flagged work.</em></p>
       <span class="app-arrow">↗</span>
-    </a>
+    </div>
 
   </div>
 
@@ -673,7 +674,7 @@
 
   <div class="apps">
 
-    <a class="app" href="https://smith-teaches-tech.github.io/agent-smith/index.html?v=2" target="_blank">
+    <div class="app" data-href="https://smith-teaches-tech.github.io/agent-smith/index.html?v=2" role="link" tabindex="0">
       <span class="app-num">№ 06</span>
       <div>
         <div class="app-name">agent/smith</div>
@@ -683,7 +684,7 @@
       <span class="revenue-ticker">UP · NOT ADVICE · DEFINITELY NOT BULLET-TIME</span>
       <span class="scribble-note">named after the only Smith allowed to be in two places at once</span>
       <span class="app-arrow">↗</span>
-    </a>
+    </div>
 
   </div>
 
@@ -723,6 +724,25 @@
     <path d="M10 10 L 50 50 M 50 10 L 10 50" stroke="#2a5d7a" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
   </svg>
 </div>
+
+<script>
+  // Make .app divs clickable, but let inner <a> tags handle their own clicks.
+  document.querySelectorAll('.app[data-href]').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      // If the click landed on an inner link (or its child), do nothing — let it work.
+      if (e.target.closest('a')) return;
+      window.open(card.dataset.href, '_blank', 'noopener');
+    });
+    // Keyboard accessibility: Enter or Space activates the card.
+    card.addEventListener('keydown', function(e) {
+      if (e.target.closest('a')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.open(card.dataset.href, '_blank', 'noopener');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
