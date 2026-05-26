@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>inov8 — a wood block's worth of links</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1714;
@@ -14,12 +14,13 @@
     --paper-deep: #e8dcc4;
     --accent: #c8442a;
     --accent-deep: #8a2e1c;
+    --blue: #2a5d7a;       /* blue crayon, sparingly */
     --muted: #6b5d4a;
     --rule: #2d2620;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
   body {
     background: var(--paper);
@@ -29,10 +30,12 @@
     line-height: 1.5;
     overflow-x: hidden;
     background-image:
-      radial-gradient(circle at 20% 10%, rgba(200,68,42,0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(45,38,32,0.05) 0%, transparent 50%);
+      radial-gradient(circle at 20% 10%, rgba(200,68,42,0.05) 0%, transparent 50%),
+      radial-gradient(circle at 85% 75%, rgba(45,38,32,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 40%, rgba(42,93,122,0.03) 0%, transparent 60%);
   }
 
+  /* Paper grain */
   body::before {
     content: '';
     position: fixed;
@@ -44,193 +47,200 @@
     z-index: 100;
   }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 2rem 6rem;
-    position: relative;
+  /* Crayon scribble layer — floats behind content */
+  .scribbles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .scribbles svg {
+    position: absolute;
+    opacity: 0.55;
   }
 
+  .container {
+    max-width: 720px;     /* mobile-first, but still readable on desktop */
+    margin: 0 auto;
+    padding: 1.5rem 1.2rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 760px) {
+    .container { max-width: 880px; padding: 3rem 2rem 6rem; }
+  }
+
+  /* ============== HEADER ============== */
   header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: end;
     border-bottom: 2px solid var(--rule);
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.2rem;
+    position: relative;
   }
 
   .masthead-meta {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--muted);
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 
   h1.masthead {
     font-family: 'Fraunces', serif;
     font-weight: 900;
-    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-size: clamp(3.8rem, 22vw, 7rem);
     line-height: 0.85;
     letter-spacing: -0.04em;
     font-variation-settings: "opsz" 144;
+    display: inline-block;
+    transform: rotate(-1.5deg);
+    transform-origin: left center;
   }
 
-  h1.masthead em {
+  h1.masthead .accent-8 {
     font-style: italic;
     font-weight: 300;
     color: var(--accent);
+    display: inline-block;
+    transform: rotate(6deg) translateY(-4px);
+  }
+
+  .deck {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 5vw, 1.6rem);
+    color: var(--ink);
+    max-width: 32ch;
+    margin: 1rem 0 0;
+    line-height: 1.25;
+    transform: rotate(-0.5deg);
   }
 
   .stamp {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent-deep);
     border: 2px solid var(--accent-deep);
-    padding: 0.6rem 0.9rem;
+    padding: 0.5rem 0.8rem;
     text-align: center;
-    transform: rotate(-3deg);
+    transform: rotate(4deg);
     white-space: nowrap;
     background: var(--paper);
+    position: absolute;
+    top: 1rem;
+    right: 0.5rem;
+    box-shadow: 2px 2px 0 rgba(138,46,28,0.15);
   }
 
-  .stamp strong { display: block; font-size: 0.85rem; margin: 0.2rem 0; }
+  .stamp strong { display: block; font-size: 0.8rem; margin: 0.15rem 0; }
 
-  .deck {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
-    color: var(--muted);
-    max-width: 60ch;
-    margin: 1.5rem 0 0;
-    line-height: 1.4;
+  @media (max-width: 480px) {
+    .stamp {
+      position: static;
+      transform: rotate(-2deg);
+      display: inline-block;
+      margin-top: 1.2rem;
+    }
   }
 
+  /* ============== HERO ============== */
   .hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    padding: 4rem 0;
+    padding: 2.2rem 0 1.8rem;
     border-bottom: 1px solid var(--rule);
-  }
-
-  @media (max-width: 760px) {
-    .hero { grid-template-columns: 1fr; gap: 2rem; }
-    header { grid-template-columns: 1fr; align-items: start; }
-    .stamp { justify-self: start; }
-  }
-
-  .qr-frame {
-    background: white;
-    padding: 1.5rem;
-    border: 1px solid var(--rule);
-    box-shadow: 0 1px 0 var(--paper-deep), 0 4px 0 var(--paper-deep), 0 4px 20px rgba(0,0,0,0.1);
     position: relative;
-    aspect-ratio: 1;
-    max-width: 380px;
-    margin: 0 auto;
   }
-
-  .qr-frame::before {
-    content: 'SCAN ↓';
-    position: absolute;
-    top: -1.5rem; left: 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    color: var(--muted);
-  }
-
-  .qr-frame::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem; right: -0.5rem;
-    width: 100%; height: 100%;
-    border: 1px solid var(--accent);
-    z-index: -1;
-  }
-
-  #qrcode { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-  #qrcode svg { width: 100%; height: 100%; }
 
   .hero-text h2 {
     font-family: 'Fraunces', serif;
     font-weight: 300;
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    line-height: 1.15;
+    font-size: clamp(1.3rem, 5.5vw, 1.9rem);
+    line-height: 1.2;
     letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  .hero-text h2 strong { font-weight: 900; font-style: italic; color: var(--accent); }
-  .hero-text p { font-size: 1rem; color: var(--muted); margin-bottom: 0.8rem; max-width: 44ch; }
+  .hero-text h2 strong {
+    font-weight: 900;
+    font-style: italic;
+    color: var(--accent);
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Crayon underline under "block of wood" */
+  .hero-text h2 strong::after {
+    content: '';
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: -3px;
+    height: 6px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'><path d='M2 5 Q 30 1, 60 4 T 120 5 T 180 3 T 198 5' stroke='%23c8442a' stroke-width='3' fill='none' stroke-linecap='round' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0.7rem;
+  }
 
   .award-note {
     background: var(--paper-deep);
     border-left: 3px solid var(--accent);
-    padding: 1.2rem 1.4rem;
-    margin: 1.8rem 0 0;
+    padding: 1rem 1.2rem;
+    margin: 1.5rem 0 0;
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--ink);
     line-height: 1.5;
+    transform: rotate(-0.4deg);
+    box-shadow: 3px 3px 0 rgba(45,38,32,0.08);
   }
 
   .award-note strong {
     font-family: 'JetBrains Mono', monospace;
     font-style: normal;
     font-weight: 700;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--accent-deep);
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
-  .footnote {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px dashed var(--muted);
-  }
-
-  /* Section headers — chapter style */
+  /* ============== CHAPTERS ============== */
   .chapter {
-    margin: 4.5rem 0 1.8rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1.5rem;
-    align-items: baseline;
+    margin: 3rem 0 1.3rem;
+    position: relative;
   }
 
   .chapter-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.62rem;
     letter-spacing: 0.25em;
     color: var(--accent-deep);
     text-transform: uppercase;
+    margin-bottom: 0.3rem;
   }
 
   .chapter-title {
     font-family: 'Fraunces', serif;
     font-weight: 900;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-size: clamp(1.6rem, 6.5vw, 2.4rem);
     line-height: 1;
     letter-spacing: -0.03em;
     color: var(--ink);
+    display: inline-block;
+    transform: rotate(-0.8deg);
   }
 
   .chapter-title em {
@@ -240,80 +250,95 @@
   }
 
   .chapter-aside {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 0.9rem;
+    font-family: 'Caveat', cursive;
+    font-weight: 400;
+    font-size: 1.15rem;
     color: var(--muted);
-    max-width: 28ch;
-    text-align: right;
-    line-height: 1.4;
+    margin-top: 0.3rem;
+    line-height: 1.3;
+    transform: rotate(0.6deg);
+    display: inline-block;
   }
 
   .chapter-rule {
     height: 1px;
     background: var(--rule);
-    margin-bottom: 0;
-    grid-column: 1 / -1;
+    margin-top: 0.8rem;
   }
 
-  @media (max-width: 760px) {
-    .chapter { grid-template-columns: 1fr; gap: 0.5rem; }
-    .chapter-aside { text-align: left; max-width: none; }
-  }
+  /* Vary chapter rotations slightly */
+  .chapter:nth-child(odd) .chapter-title { transform: rotate(-1.2deg); }
+  .chapter:nth-child(even) .chapter-title { transform: rotate(0.7deg); }
 
-  /* App grid */
+  /* ============== APP CARDS ============== */
   .apps {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    border-top: 1px solid var(--rule);
-    border-left: 1px solid var(--rule);
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  @media (min-width: 560px) {
+    .apps { grid-template-columns: 1fr 1fr; }
   }
 
   .app {
-    border-right: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    padding: 1.6rem 1.4rem;
+    border: 1.5px solid var(--rule);
+    padding: 1.2rem 1.1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
     position: relative;
-    transition: background 0.3s;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     text-decoration: none;
     color: inherit;
+    background: rgba(255,253,247,0.4);
+    box-shadow: 3px 3px 0 var(--paper-deep);
   }
+
+  /* alternate the slight tilt for each card */
+  .app:nth-child(3n+1) { transform: rotate(-0.6deg); }
+  .app:nth-child(3n+2) { transform: rotate(0.5deg); }
+  .app:nth-child(3n+3) { transform: rotate(-0.3deg); }
+
+  .app:hover, .app:active {
+    transform: rotate(0deg) translate(-1px, -1px);
+    box-shadow: 5px 5px 0 var(--paper-deep);
+    background: rgba(255,253,247,0.85);
+  }
+
+  .app:hover .app-arrow { transform: translate(3px, -3px) rotate(0); }
 
   .app.featured {
-    grid-column: span 2;
-    background: linear-gradient(135deg, var(--paper-deep) 0%, var(--paper) 100%);
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(232,220,196,0.7) 0%, rgba(244,237,225,0.5) 100%);
+    border: 2px solid var(--rule);
+    box-shadow: 4px 4px 0 var(--accent-deep);
   }
 
-  @media (max-width: 600px) {
-    .app.featured { grid-column: span 1; }
+  .app.featured:hover {
+    box-shadow: 6px 6px 0 var(--accent-deep);
   }
-
-  .app:hover { background: var(--paper-deep); }
-  .app:hover .app-arrow { transform: translate(4px, -4px); }
 
   .app-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
     color: var(--muted);
   }
 
   .app-name {
     font-family: 'Fraunces', serif;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
 
-  .app.featured .app-name { font-size: 1.7rem; }
+  .app.featured .app-name { font-size: 1.5rem; }
 
   .app-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent-deep);
@@ -336,412 +361,366 @@
     font-size: 0.82rem;
   }
 
+  .scribble-note {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--accent-deep);
+    margin-top: 0.6rem;
+    transform: rotate(-1.5deg);
+    display: inline-block;
+    line-height: 1.2;
+  }
+
   .app-arrow {
     position: absolute;
-    top: 1.4rem; right: 1.4rem;
+    top: 1rem; right: 1rem;
     font-family: 'JetBrains Mono', monospace;
     color: var(--accent);
     transition: transform 0.2s;
+    transform: rotate(-15deg);
   }
 
   .revenue-ticker {
     display: inline-block;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: var(--accent-deep);
     background: rgba(200,68,42,0.08);
     border: 1px dashed var(--accent);
-    padding: 0.2rem 0.5rem;
+    padding: 0.25rem 0.55rem;
     margin-top: 0.6rem;
     align-self: flex-start;
+    transform: rotate(-1deg);
   }
 
+  /* Inline links inside descriptions */
+  .app-desc a {
+    color: var(--accent-deep);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    text-decoration-color: var(--accent);
+  }
+
+  /* ============== PAPERTRAIL LOGO PAIR ============== */
+  .logo-pair {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: -0.3rem 0 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-pair-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .logo-real {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    box-shadow: 2px 2px 0 var(--paper-deep), 0 2px 8px rgba(0,0,0,0.1);
+    transform: rotate(-2deg);
+  }
+
+  .logo-crayon {
+    width: 64px;
+    height: 64px;
+    transform: rotate(3deg);
+  }
+
+  .logo-caption {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .logo-arrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--accent);
+    transform: rotate(15deg);
+    align-self: center;
+    margin-top: -0.8rem;
+  }
+
+  /* ============== FINE PRINT ============== */
   .fine-print {
-    margin-top: 5rem;
-    padding-top: 2rem;
+    margin-top: 4rem;
+    padding-top: 1.8rem;
     border-top: 2px solid var(--rule);
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--muted);
     line-height: 1.6;
   }
 
-  @media (max-width: 760px) {
-    .fine-print { grid-template-columns: 1fr; }
-  }
-
-  .fine-print p { margin-bottom: 0.8rem; }
+  .fine-print p { margin-bottom: 0.7rem; }
   .fine-print .colophon-title {
     color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.7rem;
     font-weight: 700;
   }
 
-  .errata { font-style: italic; font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--muted); }
+  .fine-print-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-  .app, .qr-frame, .hero-text > * {
+  @media (min-width: 560px) {
+    .fine-print-grid { grid-template-columns: 2fr 1fr; gap: 2.5rem; }
+  }
+
+  .errata {
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  /* Entrance animation */
+  .app {
     opacity: 0;
     animation: rise 0.6s ease forwards;
   }
-  .qr-frame { animation-delay: 0.1s; }
-  .hero-text > *:nth-child(1) { animation-delay: 0.2s; }
-  .hero-text > *:nth-child(2) { animation-delay: 0.3s; }
-  .hero-text > *:nth-child(3) { animation-delay: 0.4s; }
-  .hero-text > *:nth-child(4) { animation-delay: 0.5s; }
-  .hero-text > *:nth-child(5) { animation-delay: 0.6s; }
-  .app { animation-delay: 0.2s; }
-
   @keyframes rise {
-    from { opacity: 0; transform: translateY(15px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(12px) rotate(0); }
+    to   { opacity: 1; }
   }
+  .app:nth-child(1) { animation-delay: 0.05s; }
+  .app:nth-child(2) { animation-delay: 0.1s; }
+  .app:nth-child(3) { animation-delay: 0.15s; }
+  .app:nth-child(4) { animation-delay: 0.2s; }
 </style>
 </head>
 <body>
 <div class="container">
 
   <header>
-    <div>
-      <div class="masthead-meta">
-        <span>Vol. I · No. 1</span>
-        <span>Dhahran · est. 2026</span>
-      </div>
-      <h1 class="masthead">inov<em>8</em></h1>
-      <p class="deck">A small repository of mostly-working software and adjacent thinking, commemorated unnecessarily in lacquered wood. Curated by one M. Smith, who really should be grading.</p>
+    <div class="masthead-meta">
+      <span>Vol. I · No. 1</span>
+      <span>Dhahran · est. 2026</span>
     </div>
+    <h1 class="masthead">inov<span class="accent-8">8</span></h1>
+    <p class="deck">a small archive of mostly-working software &amp; the teacher who can't stop tinkering.</p>
     <div class="stamp">
-      Awarded<strong>★ INNOVATION ★</strong>by people who probably haven't read the code
+      Awarded<strong>★ INNOVATION ★</strong>by people who haven't read the code
     </div>
   </header>
 
   <section class="hero">
-    <div class="qr-frame">
-      <div id="qrcode"></div>
-    </div>
     <div class="hero-text">
-      <h2>You scanned a <strong>block of wood</strong>. That's a lot of effort for what is, candidly, just a list of links.</h2>
-      <p>Still — since you're here — below you'll find the work that apparently merited recognition. Most of it runs. A few even solve real problems.</p>
-      <p>No subscription. No newsletter. No dark patterns. (No light ones either. There are barely any patterns.)</p>
-      <div class="award-note">
-        <strong>★ A note on the trophy</strong>
-        Strictly speaking, the award was for knowing a fair bit about AI and for an "innovative" grading approach — not the apps below. The apps are just what happens when you can't stop tinkering between Period 3 and Period 5.
-      </div>
-      <div class="footnote">Thank you for not just nodding politely and walking away.</div>
+      <h2>You scanned a <strong>block of wood</strong>. Welcome.</h2>
+      <p>What follows is a list of the things I've built in the margins of a teaching job. Most run. A few solve real problems. None of them ask for your email.</p>
     </div>
   </section>
 
-  <!-- ============ CHAPTER 1: THE SAAS ATTEMPT ============ -->
+  <!-- ============ CHAPTER I — DEPARTMENT (most useful first) ============ -->
   <div class="chapter">
     <div class="chapter-num">Ch. I</div>
-    <div class="chapter-title">The <em>SaaS</em> attempt</div>
-    <div class="chapter-aside">Two products, one philosophy, $4.99 in revenue.</div>
-    <div class="chapter-rule"></div>
-  </div>
-
-  <div class="apps">
-
-    <a class="app featured" href="https://write.papertrailacademic.com/" target="_blank">
-      <span class="app-num">№ 01 · the one I'm trying to make money with</span>
-      <div>
-        <div class="app-name">PaperTrail Write</div>
-        <div class="app-tag">Monitored Writing · SaaS</div>
-      </div>
-      <p class="app-desc">A browser-based, monitored writing surface. Tracks time-on-task, paste events, tab-switching, and whether pasted text gets quietly deleted afterwards. Does <strong>not</strong> log keystrokes, clipboard contents, or anything off-page. The teacher gets a session report; the student gets a clean place to write. <em>Lifetime revenue to date: $4.99. We are, technically, profitable on a per-bagel basis.</em></p>
-      <span class="revenue-ticker">REV: $4.99 · YTD</span>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank">
-      <span class="app-num">№ 02</span>
-      <div>
-        <div class="app-name">PaperTrail (Extension)</div>
-        <div class="app-tag">Chrome Extension</div>
-      </div>
-      <p class="app-desc">The Chrome companion. Reviews Google Docs writing history and surfaces large paste events — so authorship is something you can show, not something you have to swear to. <em>Turnitin tells you if it was copied. This tells you if it was theirs.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-  </div>
-
-  <!-- ============ CHAPTER 2: AP LANG ============ -->
-  <div class="chapter">
-    <div class="chapter-num">Ch. II</div>
-    <div class="chapter-title">AP <em>Language</em></div>
-    <div class="chapter-aside">Rhetoric, syntax, argument, style — gamified, mostly responsibly.</div>
-    <div class="chapter-rule"></div>
-  </div>
-
-  <div class="apps">
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/hexagonal-thinking/" target="_blank">
-      <span class="app-num">№ 03</span>
-      <div>
-        <div class="app-name">Hexagonal Thinking</div>
-        <div class="app-tag">Synthesis</div>
-      </div>
-      <p class="app-desc">Drag hexagons. Snap them to other hexagons. Justify the connection. <em>Looks like a board game. Is, in fact, an argument scaffold.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/commentary-workshop/" target="_blank">
-      <span class="app-num">№ 04</span>
-      <div>
-        <div class="app-name">Commentary Workshop</div>
-        <div class="app-tag">Line of Reasoning · MCI</div>
-      </div>
-      <p class="app-desc">Teaches commentary to move <em>down</em> rather than sideways: Mechanism, Consequence, Implication. A walkthrough that gradually releases the student until they're writing the bridge themselves. <em>The "just keep digging" model of paragraph development.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/commentary/" target="_blank">
-      <span class="app-num">№ 05</span>
-      <div>
-        <div class="app-name">ARG: Claims, Evidence &amp; Commentary</div>
-        <div class="app-tag">Argument Building</div>
-      </div>
-      <p class="app-desc">The trinity, drilled. Students assemble argument paragraphs from parts and find out the hard way that evidence without commentary is just trivia. <em>The unit's foundation, in playable form.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/high-school-drama/" target="_blank">
-      <span class="app-num">№ 06</span>
-      <div>
-        <div class="app-name">High School Drama: Synthesis</div>
-        <div class="app-tag">Synthesis Practice</div>
-      </div>
-      <p class="app-desc">A synthesis prompt dressed up as a hallway scandal. Students weigh competing sources to take a position on something low-stakes enough to argue about, high-stakes enough to care. <em>Synthesis, but make it personal.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/unpopular-opinions/" target="_blank">
-      <span class="app-num">№ 07</span>
-      <div>
-        <div class="app-name">Unpopular Opinion Generator</div>
-        <div class="app-tag">Punctuation Drill</div>
-      </div>
-      <p class="app-desc">Generates a take you'd never voluntarily defend, then asks you to defend it in 300 words using semicolons, colons, and dashes. <em>Sophisticated punctuation is easier when the topic is "pineapple belongs on pizza."</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/evidence-hunt/" target="_blank">
-      <span class="app-num">№ 08</span>
-      <div>
-        <div class="app-name">Evidence Hunt</div>
-        <div class="app-tag">Live Collaboration</div>
-      </div>
-      <p class="app-desc">A live, classroom-wide scavenger hunt for textual evidence. Students post, vote, refine. The whiteboard, finally, scales. <em>Surprisingly competitive. Sometimes too competitive.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/thesis-statements/" target="_blank">
-      <span class="app-num">№ 09</span>
-      <div>
-        <div class="app-name">Crafting Thesis Statements</div>
-        <div class="app-tag">The Top of the Page</div>
-      </div>
-      <p class="app-desc">A guided builder for the sentence that determines everything beneath it. Models, anti-models, and a worked path from "kind of has a point" to "defensible, arguable, and worth the reader's time." <em>Where most essays are won or quietly lost.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-lang/ra-review/" target="_blank">
-      <span class="app-num">№ 10</span>
-      <div>
-        <div class="app-name">Rhetorical Analysis Sprint</div>
-        <div class="app-tag">RA · SPACE Annotation</div>
-      </div>
-      <p class="app-desc">Timed rhetorical reading drills with SPACE annotation built in. Mark up the passage, submit, move on. <em>Designed to feel less like an essay and more like a workout.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-  </div>
-
-  <!-- ============ CHAPTER 3: TOK ============ -->
-  <div class="chapter">
-    <div class="chapter-num">Ch. III</div>
-    <div class="chapter-title">Theory of <em>Knowledge</em></div>
-    <div class="chapter-aside">For asking "but how do we <em>know</em> that?" — preferably in class, not at dinner.</div>
-    <div class="chapter-rule"></div>
-  </div>
-
-  <div class="apps">
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/tok/two-true-maps/" target="_blank">
-      <span class="app-num">№ 11</span>
-      <div>
-        <div class="app-name">The Map is Not the Territory</div>
-        <div class="app-tag">Representation · AOK</div>
-      </div>
-      <p class="app-desc">Two maps of the same place. Both true. Neither complete. A lesson on representation, abstraction, and the fact that every map is also a choice about what to leave out. <em>Korzybski, but with clickable maps.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/tok/paradigm-shift/" target="_blank">
-      <span class="app-num">№ 12</span>
-      <div>
-        <div class="app-name">Paradigm Shifts</div>
-        <div class="app-tag">Knowledge · History · Methods</div>
-      </div>
-      <p class="app-desc">When the consensus changes, what counted as knowledge yesterday becomes the historical curiosity of tomorrow. Kuhn, gently introduced, with examples that don't require a PhD to see the point. <em>The lesson where geocentrism does the heavy lifting.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/tok/who-has-power/" target="_blank">
-      <span class="app-num">№ 13</span>
-      <div>
-        <div class="app-name">Power and Knowledge</div>
-        <div class="app-tag">Politics · Perspective</div>
-      </div>
-      <p class="app-desc">Who decides what counts as knowing? Whose questions get funded, whose books get assigned, whose claims get the benefit of the doubt? <em>Foucault, lightly. Just enough to ruin the news for them forever.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/tok/earthrise/" target="_blank">
-      <span class="app-num">№ 14</span>
-      <div>
-        <div class="app-name">Earthrise: Values, Interpretation, Objectivity</div>
-        <div class="app-tag">Object · The Big Photo</div>
-      </div>
-      <p class="app-desc">One photograph from 1968 — the planet, finally, seen from outside. Students work through how a single image carries science, politics, aesthetics, and an environmental movement at the same time. <em>Proof that objects are never just objects.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-  </div>
-
-  <!-- ============ CHAPTER 4: IB CORE + RESEARCH ============ -->
-  <div class="chapter">
-    <div class="chapter-num">Ch. IV</div>
-    <div class="chapter-title">IB <em>Core</em> &amp; Research</div>
-    <div class="chapter-aside">The three things students forget about until April.</div>
-    <div class="chapter-rule"></div>
-  </div>
-
-  <div class="apps">
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/IB%20Core/ib-dashboard/" target="_blank">
-      <span class="app-num">№ 15</span>
-      <div>
-        <div class="app-name">IB Core Dashboard</div>
-        <div class="app-tag">TOK · CAS · EE</div>
-      </div>
-      <p class="app-desc">One pane of glass for the three components students would otherwise treat as April surprises. Deadlines, drafts, reflection prompts, supervisor checkpoints. <em>Not endorsed by the IB. Or anyone, really.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/classroom-games/ap-research/lit-review-org/" target="_blank">
-      <span class="app-num">№ 16</span>
-      <div>
-        <div class="app-name">Organize a Literature Review</div>
-        <div class="app-tag">AP Research</div>
-      </div>
-      <p class="app-desc">Sorting sources by claim, method, and disagreement — the part of research everyone skips and then regrets in chapter two. Drag, group, justify, repeat. <em>What "synthesis" actually means when nobody's watching.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-  </div>
-
-  <!-- ============ CHAPTER 5: DEPARTMENT INFRASTRUCTURE ============ -->
-  <div class="chapter">
-    <div class="chapter-num">Ch. V</div>
-    <div class="chapter-title">Department <em>Infrastructure</em></div>
-    <div class="chapter-aside">The unglamorous, durable plumbing that runs the building.</div>
+    <div class="chapter-title">For the <em>department</em></div>
+    <div class="chapter-aside">if you're a colleague, start here</div>
     <div class="chapter-rule"></div>
   </div>
 
   <div class="apps">
 
     <a class="app" href="https://smith-teaches-tech.github.io/asd-english-department/" target="_blank">
-      <span class="app-num">№ 17</span>
+      <span class="app-num">№ 01</span>
       <div>
-        <div class="app-name">ASD English Department</div>
+        <div class="app-name">ASD English Dept.</div>
         <div class="app-tag">Faculty Hub</div>
       </div>
-      <p class="app-desc">The actual operating system of the English department: tools, handbook, curriculum maps for every course (9 through 12, AP Lang, AP Lit, Speech, Mythology, Film, Creative Writing), sub plans, master schedule, duty roster. <em>Built because the alternative was another shared Google folder.</em></p>
+      <p class="app-desc">The operating system of the English department: tools, handbook, curriculum maps for every course (9–12, AP Lang, AP Lit, Speech, Mythology, Film, Creative Writing), sub plans, master schedule, duty roster. <em>Built because the alternative was another shared Google folder.</em></p>
       <span class="app-arrow">↗</span>
     </a>
 
     <a class="app" href="https://smith-teaches-tech.github.io/asd-english-department/library/" target="_blank">
-      <span class="app-num">№ 18</span>
+      <span class="app-num">№ 02</span>
       <div>
         <div class="app-name">Dept. Library</div>
         <div class="app-tag">Books · By Classroom</div>
       </div>
-      <p class="app-desc">A directory of which books live in which classrooms. Not a checkout system — just a map. If you need <em>Gatsby</em>, it tells you whose room to walk to. <em>Apps Script: the duct tape of education.</em></p>
+      <p class="app-desc">A directory of which books live in which classrooms. Not a checkout system — just a map. If you need <em>Gatsby</em>, it tells you whose room to walk to.</p>
       <span class="app-arrow">↗</span>
     </a>
 
   </div>
 
-  <!-- ============ CHAPTER 6: WHY THE WOOD BLOCK ============ -->
+  <!-- ============ CHAPTER II — PAPERTRAIL (the SaaS) ============ -->
   <div class="chapter">
-    <div class="chapter-num">Ch. VI</div>
-    <div class="chapter-title">Why the <em>wood block</em>, actually</div>
-    <div class="chapter-aside">The work the award was, technically, for.</div>
+    <div class="chapter-num">Ch. II</div>
+    <div class="chapter-title">The <em>retirement</em> fund</div>
+    <div class="chapter-aside">on track to replace my salary by ~2387</div>
     <div class="chapter-rule"></div>
   </div>
 
   <div class="apps">
 
-    <a class="app featured" href="https://smith-teaches-tech.github.io/educational-research-data/" target="_blank">
-      <span class="app-num">№ 19 · the actual reason</span>
+    <a class="app featured" href="https://papertrailacademic.com/" target="_blank">
+      <span class="app-num">№ 03 · the actual flagship</span>
       <div>
-        <div class="app-name">Classroom Research, Documented</div>
-        <div class="app-tag">Research Site · AI Detection · Assessment</div>
+        <div class="app-name">PaperTrail</div>
+        <div class="app-tag">Chrome Extension + Companion Web App</div>
       </div>
-      <p class="app-desc">A small archive of data studies from real classrooms and a real school. Headline reports: a study of 91 papers across AP Language and IB amnesty programs (77% confession rate, &lt;1% false positives, +63% increase in flagging Sep&nbsp;2025–Jan&nbsp;2026); an internal Turnitin validation against 44 documents of known authorship; and a plain-language parent summary of the same. The output is a supervised writing protocol for flagged work. <em>The "innovative grading approach" the wood block keeps mentioning lives here.</em></p>
-      <span class="app-arrow">↗</span>
-    </a>
-
-    <a class="app" href="https://smith-teaches-tech.github.io/agent-smith/index.html?v=2" target="_blank">
-      <span class="app-num">№ 20</span>
-      <div>
-        <div class="app-name">agent/smith</div>
-        <div class="app-tag">Market Signal Terminal</div>
+      <div class="logo-pair">
+        <div class="logo-pair-item">
+          <img src="papertrail-icon.png" alt="PaperTrail logo" class="logo-real">
+          <span class="logo-caption">the logo</span>
+        </div>
+        <span class="logo-arrow">~ish ~</span>
+        <div class="logo-pair-item">
+          <!-- Hand-drawn crayon facsimile of the PaperTrail icon -->
+          <svg class="logo-crayon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="hand-drawn PaperTrail logo">
+            <!-- wobbly rounded-square navy background -->
+            <path d="M 8 6 Q 4 6 4 10 L 5 54 Q 4 58 9 59 L 55 58 Q 60 59 59 53 L 58 9 Q 59 4 53 5 Z"
+                  fill="#2a3d52" stroke="#1a2a3a" stroke-width="1.2" stroke-linejoin="round"/>
+            <!-- tilted paper sheet, off-white, slightly wonky edges -->
+            <path d="M 17 14 Q 15 14 16 17 L 19 44 Q 19 47 22 47 L 44 45 Q 47 45 46 42 L 43 17 Q 43 14 40 15 Z"
+                  fill="#f4ede1" stroke="#1a1714" stroke-width="1.3" stroke-linejoin="round"
+                  transform="rotate(-6 32 30)"/>
+            <!-- wavy text lines on the paper -->
+            <g stroke="#2d2620" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.75"
+               transform="rotate(-6 32 30)">
+              <path d="M 21 22 Q 28 21 35 22 T 42 22"/>
+              <path d="M 21 27 Q 29 26 36 27 T 42 27"/>
+              <path d="M 21 32 Q 28 31 35 32 T 40 32"/>
+              <path d="M 21 37 Q 27 36 33 37"/>
+            </g>
+            <!-- dotted trail curving off bottom-right -->
+            <g fill="#c8442a" opacity="0.85">
+              <circle cx="44" cy="46" r="1.6"/>
+              <circle cx="48" cy="48" r="1.5"/>
+              <circle cx="51" cy="51" r="1.4"/>
+              <circle cx="53" cy="54" r="1.3"/>
+              <circle cx="54" cy="57" r="1.1"/>
+            </g>
+          </svg>
+          <span class="logo-caption">by a kid</span>
+        </div>
       </div>
-      <p class="app-desc">A daily-tape terminal that scans markets, flags overdone and underdone moves, watches the VIX, and reads the news (yes, including Truth Social) so I don't have to. Powered by Claude Opus 4.7. Pointers, not recommendations. <em>Named after the only Smith allowed to be in two places at once. Definitely not bullet-time.</em></p>
+      <p class="app-desc">A Chrome extension that reviews Google Docs writing history and flags large paste events — so authorship is something you can show, not something you have to swear to. The companion web app, <a href="https://write.papertrailacademic.com/" target="_blank">PaperTrail Write</a>, is a monitored writing surface for when you need a clean room: tracks time-on-task, pastes, tab-switching, and quietly-deleted paste-ins. No keystrokes, no clipboard, nothing off-page. <em>Turnitin tells you if it was copied. PaperTrail tells you if it was theirs.</em></p>
+      <span class="revenue-ticker">45 USERS · $4.99 LIFETIME REV</span>
+      <span class="scribble-note">a per-bagel profit margin!</span>
       <span class="app-arrow">↗</span>
     </a>
 
   </div>
 
+  <!-- ============ CHAPTER III — CLASSROOM GAMES ============ -->
+  <div class="chapter">
+    <div class="chapter-num">Ch. III</div>
+    <div class="chapter-title">Classroom <em>games</em></div>
+    <div class="chapter-aside">roughly 20 small tools, one big hub</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="apps">
+
+    <a class="app featured" href="https://smith-teaches-tech.github.io/classroom-games/" target="_blank">
+      <span class="app-num">№ 04 · the whole arcade</span>
+      <div>
+        <div class="app-name">Classroom Games</div>
+        <div class="app-tag">AP Lang · TOK · IB Core · AP Research</div>
+      </div>
+      <p class="app-desc">Roughly two dozen single-purpose tools for the courses I teach. <strong>AP Lang:</strong> Hexagonal Thinking, Commentary Workshop, Evidence Hunt, Thesis Statements, Rhetorical Analysis Sprint, an Unpopular Opinion Generator that exists mostly to teach semicolons. <strong>TOK:</strong> The Map is Not the Territory, Paradigm Shifts, Power &amp; Knowledge, Earthrise (Apollo 8 as a TOK object). <strong>IB Core:</strong> a Dashboard for the three things students forget about until April. <strong>AP Research:</strong> a literature-review organiser. <em>The whole thing is held together by a Google Sheets backend — the duct tape and bubble gum of modern coding.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+  </div>
+
+  <!-- ============ CHAPTER IV — RESEARCH ============ -->
+  <div class="chapter">
+    <div class="chapter-num">Ch. IV</div>
+    <div class="chapter-title">Research, <em>documented</em></div>
+    <div class="chapter-aside">the part that, fine, may have helped the wood block happen</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="apps">
+
+    <a class="app" href="https://smith-teaches-tech.github.io/educational-research-data/" target="_blank">
+      <span class="app-num">№ 05</span>
+      <div>
+        <div class="app-name">Classroom Research</div>
+        <div class="app-tag">AI Detection · Assessment</div>
+      </div>
+      <p class="app-desc">A small archive of data studies from real classrooms. Headline reports: 91 papers across AP Lang and IB amnesty programs (77% confession rate, &lt;1% false positives, +63% flagging Sep&nbsp;2025–Jan&nbsp;2026); an internal Turnitin validation against 44 documents of known authorship; and a plain-language parent summary. <em>Includes a supervised writing protocol for flagged work.</em></p>
+      <span class="app-arrow">↗</span>
+    </a>
+
+  </div>
+
+  <!-- ============ CHAPTER V — AGENT SMITH (kicker) ============ -->
+  <div class="chapter">
+    <div class="chapter-num">Ch. V · Coda</div>
+    <div class="chapter-title">…and one more <em>thing</em></div>
+    <div class="chapter-aside">unrelated to teaching, deeply related to procrastinating</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="apps">
+
+    <a class="app" href="https://smith-teaches-tech.github.io/agent-smith/index.html?v=2" target="_blank">
+      <span class="app-num">№ 06</span>
+      <div>
+        <div class="app-name">agent/smith</div>
+        <div class="app-tag">Personal Stock Market Theses</div>
+      </div>
+      <p class="app-desc">My running collection of stock-market theses, served as a daily-tape terminal. Scans the news (yes, including Truth Social), watches the VIX, classifies the day's moves as overdone or underdone, and tells me which positions to actually pay attention to. Powered by Claude Opus 4.7. You're welcome to follow along and put real money on its read of the day. <em>So far: up, somewhere north of $400. I would almost certainly be wealthier — and have considerably more weekends — if I'd just bought the S&amp;P. Any gains are obviously skill. Any losses are directly attributable to Claude, not M. Smith.</em></p>
+      <span class="revenue-ticker">UP · NOT ADVICE · DEFINITELY NOT BULLET-TIME</span>
+      <span class="scribble-note">named after the only Smith allowed to be in two places at once</span>
+      <span class="app-arrow">↗</span>
+    </a>
+
+  </div>
+
+  <!-- ============ FINE PRINT ============ -->
   <div class="fine-print">
-    <div>
-      <div class="colophon-title">Colophon</div>
-      <p>Set in Fraunces (display) and JetBrains Mono (technical apparatus). Built in a single HTML file, hosted on GitHub Pages, because it turns out you don't need much.</p>
-      <p>All work © M. Smith, who reserves the right to break any of it at any time, usually right before a class needs it.</p>
-      <p class="errata">Errata: the trophy is, in fact, a block of wood. This was not a mistake.</p>
-    </div>
-    <div>
-      <div class="colophon-title">Contact</div>
-      <p>American School of Dhahran<br>Eastern Province, KSA</p>
-      <p>smith-teaches-tech<br>on GitHub</p>
+    <div class="fine-print-grid">
+      <div>
+        <div class="colophon-title">Colophon</div>
+        <p>Set in Fraunces (display), JetBrains Mono (technical apparatus), and Caveat (where things got casual). Built in a single HTML file, hosted on GitHub Pages, because it turns out you don't need much.</p>
+        <p>All work © M. Smith, who reserves the right to break any of it at any time, usually right before a class needs it.</p>
+        <p class="errata">Errata: the trophy is, in fact, an <em>unlacquered</em> block of wood. This was not a mistake.</p>
+      </div>
+      <div>
+        <div class="colophon-title">Contact</div>
+        <p>American School of Dhahran<br>Eastern Province, KSA</p>
+        <p>smith-teaches-tech<br>on GitHub</p>
+      </div>
     </div>
   </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script>
-  const QR_URL = 'https://smith-teaches-tech.github.io/inov8/';
-
-  QRCode.toString(QR_URL, {
-    type: 'svg',
-    margin: 0,
-    errorCorrectionLevel: 'M',
-    color: { dark: '#1a1714', light: '#ffffff00' }
-  }, function (err, svg) {
-    if (err) {
-      document.getElementById('qrcode').textContent = 'QR generation failed.';
-      return;
-    }
-    document.getElementById('qrcode').innerHTML = svg;
-  });
-</script>
+<!-- Floating crayon scribbles — pure decoration, behind content -->
+<div class="scribbles" aria-hidden="true">
+  <svg width="120" height="80" viewBox="0 0 120 80" style="top:8%; left:-2%;" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 50 Q 30 10, 55 35 T 105 25" stroke="#c8442a" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+  </svg>
+  <svg width="100" height="100" viewBox="0 0 100 100" style="top:42%; right:-3%;" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="35" stroke="#2a5d7a" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="4 6"/>
+    <circle cx="50" cy="50" r="22" stroke="#2a5d7a" stroke-width="1.5" fill="none" opacity="0.25"/>
+  </svg>
+  <svg width="80" height="60" viewBox="0 0 80 60" style="top:78%; left:0%;" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 30 L 25 10 L 25 50 Z" stroke="#c8442a" stroke-width="2" fill="none" opacity="0.3"/>
+    <path d="M40 15 Q 60 30, 75 15" stroke="#c8442a" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.35"/>
+  </svg>
+  <svg width="60" height="60" viewBox="0 0 60 60" style="top:25%; right:2%;" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 10 L 50 50 M 50 10 L 10 50" stroke="#2a5d7a" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  </svg>
+</div>
 
 </body>
 </html>
